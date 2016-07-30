@@ -1,0 +1,4 @@
+﻿  main.cpp
+d:\project\stl과제2\stl과제2\main.cpp(46): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\conio.h(452): note: 'getch' 선언을 참조하십시오.
+  STL과제2.vcxproj -> D:\Project\STL과제2\x64\Debug\STL과제2.exe
