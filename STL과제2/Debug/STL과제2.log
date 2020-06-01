@@ -1,0 +1,6 @@
+﻿  main.cpp
+C:\Users\dygks\Desktop\STL-Replay-master\STL과제2\main.cpp(46,9): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  Timer.cpp
+  코드를 생성하고 있습니다...
+C:\Users\dygks\Desktop\STL-Replay-master\STL과제2\Timer.cpp(15): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+  STL과제2.vcxproj -> C:\Users\dygks\Desktop\STL-Replay-master\STL과제2\Debug\STL과제2.exe

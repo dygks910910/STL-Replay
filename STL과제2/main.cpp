@@ -1,33 +1,34 @@
 #include<iostream>
 #include<string>
-#include<vector>
 #include<conio.h>
 #include<fstream>
 #include"Timer.h"
 #include<algorithm>
 #include<iterator>
+#include<list>
 using namespace std;
 
-ostream& operator<<(ostream& os, const vector<char>& v);
-istream& operator >> (istream& is, vector<pair<double, vector<char>>>& v);
-ostream& operator<<(ostream& os, const vector<pair<double, vector<char>>>& v);
+wostream& operator<<(wostream& os, const list<wchar_t>& v);
+wistream& operator>> (wistream& is, list<pair<double, list<wchar_t>>>& v);
+wostream& operator<<(wostream& os, const list<pair<double, list<wchar_t>>>& v);
 
 void main()
 {
+	std::locale::global(std::locale(""));
+
 	CTimer timer; // 시간정보를 리턴하는객체.
-	char a=NULL;
+	wchar_t a=NULL;
 	int menuSell = 0;
 	double tempTime = 0;
-	vector<char> v;
-	vector<pair<double, vector<char>>> v_replayData;
-	v.reserve(100);
-	v_replayData.reserve(100);
-	string tempstring{};
-	ofstream out;
-	ifstream in;
+	list<wchar_t> v;
+	list<pair<double, list<wchar_t>>> v_replayData;
+	
+	wstring tempstring{};
+	wofstream out;
+	wifstream in;
 
 	//재생을 위한 이터레이터
-	vector<pair<double, vector<char>>>::iterator replayer_iterator;
+	list<pair<double, list<wchar_t>>>::iterator replayer_iterator;
 	
 
 	while (1) {
@@ -36,6 +37,7 @@ void main()
 		cout << "2.REPLAY" << endl;
 		cout << "3.MYREPLAY" << endl;
 		cout << "입력"; cin >> menuSell;
+
 		system("cls");
 		switch (menuSell)
 		{
@@ -43,11 +45,11 @@ void main()
 			timer.setStartTime(chrono::system_clock::now());
 			while (1)
 			{
-				a = getch();
+				a = _getwch();
 				v.emplace_back(a);
-				if (a == '\r')
-					tempstring += '\n';
-				else if (a == '\b')
+				if (a == L'\r')
+					tempstring += L'\n';
+				else if (a == L'\b')
 				{
 					if (tempstring.size() >= 1)
 					{
@@ -62,9 +64,9 @@ void main()
 				}
 				else
 					tempstring += a;
-				if (a == '\x1b')
+				if (a == L'\x1b')
 				{
-					out.open(".\\과제2.txt",ios::out|ios::trunc);
+					out.open(L".\\과제2.txt", wios::out| wios::trunc);
 					out << v_replayData;
 					tempstring.clear();
 					out.close();
@@ -82,12 +84,12 @@ void main()
 				tempTime = timer.getNowTime(chrono::system_clock::now());
 				v_replayData.push_back(make_pair(tempTime, v));
 				system("cls");
-				cout << tempstring;
+				wcout << tempstring;
 
 			}
 			break;
 		case 2:
-			in.open(".\\과제2.txt",ios::in);
+			in.open(L".\\과제2.txt", wios::in);
 			if (v_replayData.size() != 0)
 			{
 				v_replayData.clear();
@@ -119,7 +121,7 @@ void main()
 				if ((*replayer_iterator).first < tempTime)
 				{
 					system("cls");
-					cout << (*replayer_iterator).second;
+					wcout << (*replayer_iterator).second;
 					replayer_iterator++;
 				}
 
@@ -128,7 +130,7 @@ void main()
 			system("cls");
 			break;
 		case 3:
-			in.open(".\\내가쓴거.txt", ios::in);
+			in.open(L".\\과제2.txt", wios::in);
 			if (v_replayData.size() != 0)
 			{
 				v_replayData.clear();
@@ -160,7 +162,7 @@ void main()
 				if ((*replayer_iterator).first < tempTime)
 				{
 					system("cls");
-					cout << (*replayer_iterator).second;
+					wcout << (*replayer_iterator).second;
 					replayer_iterator++;
 				}
 
@@ -200,46 +202,50 @@ void main()
 	}*/
 	}
 }
-ostream& operator<<(ostream& os, const vector<pair<double, vector<char>>>& v)
+
+
+wostream& operator<<(wostream& os, const list<wchar_t>& v)
 {
-	for (auto p = v.begin(); p != v.end(); ++p)
-	{
-		os << (*p).first << " " << (*p).second << "\n";
-	}
-	return os;
-}
-ostream& operator<<(ostream& os, const vector<char>& v)
-{
+	// TODO: 여기에 return 문을 삽입합니다.
 	for (auto p = v.begin(); p != v.end(); ++p)
 	{
 		os << *p;
 	}
 	return os;
 }
-istream& operator >> (istream& is, vector<pair<double, vector<char>>>& v)
+
+wistream& operator>>(wistream& is, list<pair<double, list<wchar_t>>>& v)
 {
-	char temp;
+	wchar_t temp;
 	double tempTime;
-	vector<char> tempVector;
+	list<wchar_t> tempVector;
 	is >> tempTime;
 	//cout << "시간" << tempTime << endl;
-	while (1)
+	while (is.good())
 	{
 		temp = is.get();
 		if (temp == -1)
 			break;
-		else if (temp == '\r')
+		else if (temp == L'\r')
 		{
-			tempVector.emplace_back('\n');
+			tempVector.emplace_back(L'\n');
 		}
-		else if (temp == '\n')
+		else if (temp == L'\n')
 			break;
 		else
 			tempVector.emplace_back(temp);
 	}
-	if(tempVector.size() != 0)
-	v.emplace_back(tempTime, tempVector);
+	if (tempVector.size() != 0)
+		v.emplace_back(tempTime, tempVector);
 	//cout << v << endl;
 	return is;
 }
-
+wostream& operator<<(wostream& os, const list<pair<double, list<wchar_t>>>& v)
+{
+	// TODO: 여기에 return 문을 삽입합니다.
+	for (auto p = v.begin(); p != v.end(); ++p)
+	{
+		os << (*p).first << " " << (*p).second << "\n";
+	}
+	return os;
+}
